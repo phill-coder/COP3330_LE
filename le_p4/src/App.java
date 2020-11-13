@@ -1,19 +1,29 @@
 import java.io.FileNotFoundException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.text.SimpleDateFormat;
+
 
 public class App {
 
+    private TaskList itemList;
+
     private static Scanner input = new Scanner(System.in);
 
+    public App(){
+        itemList = new TaskList();
+    }
     public static void main(String[] args){
         App a = new App();
         a.mainMenu();
     }
 
     private void mainMenu(){
+
         while(true) {
             try {
                 int option = showOptions();
@@ -58,7 +68,8 @@ public class App {
                     System.out.println("1");
                 }
                 else if(operations == 2){
-                    addItem();
+                    input.nextLine();
+                    processItem();
                 }
                 else if(operations == 3){
                     System.out.println("3");
@@ -87,7 +98,7 @@ public class App {
             catch(InputMismatchException ex){
                 System.out.println("Must enter a number between 1 and 8");
             } finally {
-                //input.nextLine();
+               //input.nextLine();
             }
         }
     }
@@ -105,19 +116,50 @@ public class App {
 
         return input.nextInt();
     }
-/*
-    private static void addItem(){
-        TaskItem t = new TaskItem();
+
+    private void processItem(){
+
+        TaskItem item = addItem();
+
+        addToList(item);
+        taskMenu();
+    }
+
+    private void addToList(TaskItem item){
+        itemList.storeItem(item);
+    }
+
+    private TaskItem addItem(){
+        TaskItem info = null;
         while(true){
             try{
-                String title = t.getTitle();
+                String title = getTitle();
+                String description = getDescription();
+                String dueDate = getDate();
+                info = new TaskItem(title,description,dueDate);
 
                 break;
             } catch(IllegalArgumentException ex){
-                System.out.println("Invalid Title");
+               System.out.println("Invalid Title");
+            }catch (DateTimeException ex){
+                System.out.println("Invalid Date");
             }
         }
-
+        return info;
     }
-*/
+
+    private String getTitle(){
+        System.out.println("Task title:");
+        return input.nextLine();
+    }
+    private String getDescription(){
+        System.out.println("Task description:");
+        return input.nextLine();
+    }
+    private String getDate(){
+        System.out.println("Task Due date (YYYY-MM-DD)");
+        return input.nextLine();
+    }
+
+
 }

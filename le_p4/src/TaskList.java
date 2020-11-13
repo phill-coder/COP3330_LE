@@ -1,11 +1,16 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
+import java.util.List;
 
 public class TaskList {
-    private ArrayList<TaskItem> Items = new ArrayList<>();
+   List<TaskItem> itemList;
 
-//    public void createItemList(){
-//
-//    }
+   public TaskList(){
+       itemList = new ArrayList<>();
+   }
 
+
+    public void storeItem(TaskItem itemInfo){
+       itemList.add(itemInfo);
+
+    }
 }
