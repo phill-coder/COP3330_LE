@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class App {
 
-    private TaskList itemList;
+    private final TaskList itemList;
 
 
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
 
     public App(){
        itemList = new TaskList();
@@ -68,7 +68,7 @@ public class App {
             try{
                 int operations = listOperation();
                 if(operations == 1){
-                    viewList();
+                    itemList.viewList();
                 }
                 else if(operations == 2){
                     input.nextLine();
@@ -157,20 +157,6 @@ public class App {
         return input.nextLine();
     }
 
-    private void viewList(){
-        System.out.println("Current Tasks");
-        System.out.println("---------------");
-
-        for(int i = 0; i < itemList.sizeOfList();i++){
-            System.out.println(i+") " +checkPrint(i)+"[" + itemList.getDueDate(i) + "] " + itemList.getTitle(i) + ": " + itemList.getDescription(i));
-        }
-    }
-    private String checkPrint(int index){
-        if(itemList.getCompletion(index)){
-            return " *** ";
-        }
-        return "";
-    }
 
     private void editTask(){
         if(isNotEmpty()){
@@ -195,7 +181,7 @@ public class App {
         }
     }
     private int getEditIndex(){
-        viewList();
+        itemList.viewList();
         System.out.println("Which task will you edit?");
         int num;
         if(input.hasNextInt()){
@@ -219,10 +205,7 @@ public class App {
         return input.nextLine();
     }
     private boolean isNotEmpty(){
-        if(itemList.isEmpty()){
-            return false;
-        }
-        return true;
+        return !itemList.isEmpty();
     }
 
     private void toRemove(){
@@ -237,7 +220,7 @@ public class App {
     }
 
     private int getRemNum(){
-        viewList();
+        itemList.viewList();
         System.out.println("which task will you remove?");
         int num;
         if(input.hasNextInt()){
@@ -266,7 +249,7 @@ public class App {
         }
     }
     private int getCompleteIndex(){
-        unCompletedTaskPrint();
+        itemList.unCompletedTaskPrint();
         System.out.println("Which task will you mark as complete?");
         int num;
         if(input.hasNextInt()){
@@ -275,16 +258,6 @@ public class App {
         } else{
             input.next();
             throw new InputMismatchException();
-        }
-    }
-    private void unCompletedTaskPrint(){
-        System.out.println("Uncompleted Tasks");
-        System.out.println("------------------");
-
-        for(int i = 0; i < itemList.sizeOfList();i++){
-            if(!itemList.getCompletion(i)) {
-                System.out.println(i + ") " + "[" + itemList.getDueDate(i) + "] " + itemList.getTitle(i) + ": " + itemList.getDescription(i));
-            }
         }
     }
 
@@ -305,7 +278,7 @@ public class App {
         }
     }
     private int getUnCompleteIndex(){
-        completedTaskPrint();
+        itemList.completedTaskPrint();
         System.out.println("Which task will you unmark as completed?");
         int num;
         if(input.hasNextInt()){
@@ -316,16 +289,7 @@ public class App {
             throw new InputMismatchException();
         }
     }
-    private void completedTaskPrint(){
-        System.out.println("Completed Tasks");
-        System.out.println("------------------");
 
-        for(int i = 0; i < itemList.sizeOfList();i++){
-            if(itemList.getCompletion(i)) {
-                System.out.println(i + ") " + "[" + itemList.getDueDate(i) + "] " + itemList.getTitle(i) + ": " + itemList.getDescription(i));
-            }
-        }
-    }
     private void save(){
         if(isNotEmpty()) {
             input.nextLine();

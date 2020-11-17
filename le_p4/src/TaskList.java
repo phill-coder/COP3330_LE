@@ -33,10 +33,7 @@ public class TaskList {
     }
 
     public boolean isEmpty(){
-        if(itemList.size() == 0){
-            return true;
-        }
-        return false;
+        return itemList.size() == 0;
     }
 
     public void editTaskItemTitle(String title,int index) {
@@ -69,23 +66,19 @@ public class TaskList {
 
     public String getTitle(int index){
         TaskItem item = itemList.get(index);
-        String title = item.getTitle();
-        return title;
+        return item.getTitle();
     }
     public String getDescription(int index){
         TaskItem item = itemList.get(index);
-        String description = item.getDescription();
-        return description;
+        return item.getDescription();
     }
     public String getDueDate(int index){
         TaskItem item = itemList.get(index);
-        String dueDate = item.getDueDate();
-        return dueDate;
+        return item.getDueDate();
     }
     public boolean getCompletion(int index){
         TaskItem item = itemList.get(index);
-        boolean completion = item.getCompletion();
-        return completion;
+        return item.getCompletion();
     }
 
     public void removeTask(int index){
@@ -177,4 +170,44 @@ public class TaskList {
         ex.printStackTrace();
         }
     }
+
+    public void viewList(){
+        System.out.println("Current Tasks");
+        System.out.println("---------------");
+
+        for(int i = 0; i < itemList.size();i++){
+            System.out.println(i+") " +checkPrint(i)+"[" + getDueDate(i) + "] " + getTitle(i) + ": " + getDescription(i));
+        }
+    }
+    private String checkPrint(int index){
+        if(getCompletion(index)){
+            return " *** ";
+        }
+        return "";
+    }
+
+
+    public void completedTaskPrint(){
+        System.out.println("Completed Tasks");
+        System.out.println("------------------");
+
+        for(int i = 0; i < itemList.size();i++){
+            if(getCompletion(i)) {
+                System.out.println(i + ") " + "[" + getDueDate(i) + "] " + getTitle(i) + ": " + getDescription(i));
+            }
+        }
+    }
+
+    public void unCompletedTaskPrint(){
+        System.out.println("Uncompleted Tasks");
+        System.out.println("------------------");
+
+        for(int i = 0; i < itemList.size();i++){
+            if(!getCompletion(i)) {
+                System.out.println(i + ") " + "[" + getDueDate(i) + "] " + getTitle(i) + ": " + getDescription(i));
+            }
+        }
+    }
+
+
 }

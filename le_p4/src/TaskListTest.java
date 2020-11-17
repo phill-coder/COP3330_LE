@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskListTest {
     private TaskList itemList;
-    private TaskItem item;
     @BeforeEach
     public void initArray(){
         itemList = new TaskList();
