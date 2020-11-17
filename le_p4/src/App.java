@@ -327,9 +327,13 @@ public class App {
         }
     }
     private void save(){
-        input.nextLine();
-        String name = getSaveName();
-        itemList.save(name);
+        if(isNotEmpty()) {
+            input.nextLine();
+            String name = getSaveName();
+            itemList.save(name);
+        } else{
+            System.out.println("List Empty");
+        }
 
     }
     private String getSaveName(){
